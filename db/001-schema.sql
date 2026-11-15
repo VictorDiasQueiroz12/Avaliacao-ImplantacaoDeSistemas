@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS products (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name VARCHAR(100) NOT NULL CHECK (length(trim(name)) > 0),
+  description VARCHAR(500) NOT NULL DEFAULT '',
+  price_cents INTEGER NOT NULL CHECK (price_cents BETWEEN 1 AND 1000000)
+);
+CREATE TABLE IF NOT EXISTS orders (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  total_cents INTEGER NOT NULL CHECK (total_cents BETWEEN 1 AND 1000000000)
+);
+CREATE TABLE IF NOT EXISTS order_items (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+  product_id INTEGER NOT NULL REFERENCES products(id),
+  product_name VARCHAR(100) NOT NULL,
+  quantity INTEGER NOT NULL CHECK (quantity BETWEEN 1 AND 99),
+  unit_price_cents INTEGER NOT NULL CHECK (unit_price_cents BETWEEN 1 AND 1000000),
+  UNIQUE (order_id, product_id)
+);
+CREATE INDEX IF NOT EXISTS orders_created_at_idx ON orders(created_at DESC, id DESC);
+CREATE INDEX IF NOT EXISTS order_items_order_id_idx ON order_items(order_id);

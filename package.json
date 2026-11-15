@@ -1,0 +1,33 @@
+{
+  "name": "estulanches",
+  "version": "1.0.0",
+  "description": "Cardápio e pedidos da cantina escolar",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:init": "node scripts/init-db.js",
+    "test": "node --test tests/unit/*.test.js",
+    "test:integration": "node --test --test-concurrency=1 tests/integration/*.test.js",
+    "test:all": "npm run test && npm run test:integration",
+    "test:e2e": "node scripts/e2e.js",
+    "test:browser": "node --test tests/browser/*.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.65.1",
+    "supertest": "^7.3.2"
+  }
+}

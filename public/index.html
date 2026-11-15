@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR" data-type="software">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gerencie o cardápio e os pedidos da cantina escolar com o EstuLanches.">
+  <meta name="page-type" content="software">
+  <meta name="site-kind" content="software">
+  <title>EstuLanches · Cantina escolar</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Pular para o conteúdo</a>
+  <aside class="sidebar">
+    <a class="brand" href="#cardapio"><span class="brand-mark" aria-hidden="true">E<span>·</span></span><span>EstuLanches<small>Cantina escolar</small></span></a>
+    <p class="nav-label">Organize sua cantina</p>
+    <nav aria-label="Navegação principal">
+      <a href="#cardapio" data-page="cardapio"><span aria-hidden="true">▦</span> Cardápio</a>
+      <a href="#pedido" data-page="pedido"><span aria-hidden="true">＋</span> Novo pedido <span class="nav-count" id="cart-count" hidden>0</span></a>
+      <a href="#historico" data-page="historico"><span aria-hidden="true">◷</span> Histórico</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="mini-mark" aria-hidden="true">E.</span><div>Do recreio ao registro.<small>Gestão da cantina</small></div></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>Cantina <span class="separator">/</span> <strong id="breadcrumb">Cardápio</strong></span><span class="workspace-label">EstuLanches <span class="avatar" aria-hidden="true">EL</span></span></header>
+    <main id="main" tabindex="-1">
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <section id="cardapio" aria-labelledby="menu-title">
+        <div class="page-heading"><div><p class="eyebrow">O intervalo começa aqui</p><h1 id="menu-title">Cardápio da cantina</h1><p>Todos os produtos, prontos para o próximo pedido.</p></div><button class="primary" id="open-product"><span aria-hidden="true">＋</span> Cadastrar produto</button></div>
+        <div class="menu-banner"><div><span class="banner-tag">Na hora do recreio</span><h2>Um bom lanche.<br>Um pedido organizado.</h2><p>Escolha os produtos e monte seu pedido.</p><a class="dark-button" href="#pedido">Criar novo pedido <span aria-hidden="true">↗</span></a></div><div class="banner-type" aria-hidden="true"><span>hora do</span><strong>lanche<span>!</span></strong><div class="ticket">CARDÁPIO & PEDIDOS <b>ESTULANCHES</b></div></div></div>
+        <div class="list-heading"><h2>Produtos disponíveis <span id="product-count" class="count">—</span></h2><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar no cardápio" aria-label="Buscar no cardápio"></label></div>
+        <div id="products-state" class="state" role="status">Carregando cardápio…</div>
+        <div id="products" class="product-grid"></div>
+      </section>
+      <section id="pedido" aria-labelledby="order-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">Um lanche de cada vez</p><h1 id="order-title">Novo pedido</h1><p>Selecione os produtos e confira as quantidades.</p></div><a class="secondary" href="#historico">Ver histórico <span aria-hidden="true">↗</span></a></div>
+        <div class="order-layout"><div><div class="list-heading"><h2>Escolha os produtos</h2><button class="text-button" id="reload-products">Atualizar cardápio</button></div><div id="order-products-state" class="state" role="status"></div><div id="order-products" class="order-products"></div></div>
+        <aside class="cart" aria-labelledby="cart-title"><div class="cart-heading"><h2 id="cart-title">Seu pedido</h2><span class="tag">Em montagem</span></div><div id="cart-items"></div><div class="cart-total"><span>Total</span><strong id="cart-total">R$ 0,00</strong></div><p class="cart-help">Confira os itens antes de confirmar.</p><button id="confirm-order" class="primary" disabled>Confirmar pedido <span aria-hidden="true">→</span></button><p id="order-feedback" class="field-error" role="alert"></p></aside></div>
+      </section>
+      <section id="historico" aria-labelledby="history-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">Tudo registrado</p><h1 id="history-title">Histórico de pedidos</h1><p>Consulte os itens, as quantidades e o total de cada pedido.</p></div><a class="primary" href="#pedido">＋ Criar novo pedido</a></div>
+        <div class="list-heading"><h2>Pedidos registrados</h2><button id="reload-orders" class="secondary">Atualizar histórico</button></div>
+        <div id="orders-state" class="state" role="status"></div><div id="orders" class="orders"></div><button class="secondary load-more" id="load-more" hidden>Carregar mais pedidos</button>
+      </section>
+      <footer><span>EstuLanches</span> Cardápio e pedidos da cantina escolar.</footer>
+    </main>
+  </div>
+  <dialog id="product-dialog" aria-labelledby="dialog-title">
+    <form id="product-form" novalidate><div class="dialog-heading"><div><p class="eyebrow">Cardápio da cantina</p><h2 id="dialog-title">Cadastrar produto</h2></div><button type="button" id="close-product" class="icon-button" aria-label="Fechar cadastro">×</button></div>
+      <p class="dialog-intro">Adicione um novo lanche ou bebida ao cardápio.</p>
+      <label for="product-name">Nome do produto</label><input id="product-name" name="name" maxlength="100" required autocomplete="off" placeholder="Ex.: Tapioca de queijo" aria-describedby="name-error"><small id="name-error" class="field-error"></small>
+      <label for="product-description">Descrição <span class="optional">opcional</span></label><textarea id="product-description" name="description" maxlength="500" rows="3" placeholder="Ingredientes, porção ou tamanho"></textarea>
+      <label for="product-price">Preço (R$)</label><input id="product-price" name="price" inputmode="decimal" required placeholder="0,00" aria-describedby="price-error"><small id="price-error" class="field-error"></small>
+      <p id="product-error" class="field-error" role="alert"></p><div class="dialog-actions"><button type="button" class="secondary" id="cancel-product">Cancelar</button><button type="submit" class="primary" id="save-product">Cadastrar produto</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

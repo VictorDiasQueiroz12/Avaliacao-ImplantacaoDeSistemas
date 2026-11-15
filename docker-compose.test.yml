@@ -1,0 +1,28 @@
+services:
+  db-test:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: estulanches_test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test_only
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test -d estulanches_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+  tests:
+    image: node:24-alpine
+    working_dir: /app
+    volumes:
+      - .:/app:ro
+      - test_node_modules:/app/node_modules
+    environment:
+      TEST_DATABASE_URL: postgresql://test:test_only@db-test:5432/estulanches_test
+    depends_on:
+      db-test:
+        condition: service_healthy
+    command: sh -c "npm ci && npm run test:all"
+volumes:
+  test_node_modules:
