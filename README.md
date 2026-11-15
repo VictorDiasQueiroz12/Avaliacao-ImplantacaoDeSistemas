@@ -170,9 +170,3 @@ Valores monetários são inteiros em centavos. Respostas de listas são arrays J
 Cadastros retornam `201`; consultas `200`; validação `400`; produto inexistente em pedido `422`; recurso ausente `404`; corpo acima de 32 KB `413`; falha interna `500`. Erros seguem `{ "error": "mensagem em português" }`. Pedidos retornam `id`, `createdAt`, `totalCents` e `items` com `productId`, `name`, `quantity` e `unitPriceCents`.
 
 Segurança: SQL parametrizado, validação no servidor, limite de JSON, Helmet/CSP, segredos em ambiente, ausência de detalhes SQL nas respostas e uso de `textContent` na interface para conteúdo cadastrado. A aplicação é um sistema demonstrativo para ambiente controlado, sem autenticação/perfis de acesso, pagamento ou gestão de estoque. Antes de disponibilizá-la publicamente, configure autenticação/autorização, HTTPS, limitação de requisições, backups e observabilidade. Se houver perda de conexão durante a confirmação, confira o histórico antes de reenviar: não há chave de idempotência entre tentativas de rede.
-
-## Referência da atividade e validação realizada
-
-Foi consultado o PDF `Atividade Implantação de sistemas.pdf` fornecido no Downloads. Ele solicita Dockerfile/Compose, verificação de estado/portas, auditoria dos logs e testes unitários/de integração. Também menciona RDM em PDF, vídeo de 2 a 5 minutos e publicação no GitHub. Conforme o escopo explícito desta solicitação, esta entrega cobre código, implantação Docker e documentação técnica no repositório; não inclui RDM, gravação de vídeo ou publicação no GitHub.
-
-Veja [docs/validacao.md](docs/validacao.md) para os resultados efetivamente executados e as verificações Docker que precisam ser reproduzidas em um ambiente com Docker Desktop.
