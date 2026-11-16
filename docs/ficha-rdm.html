@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Ficha RDM - EstuLanches 1.0.0</title>
+<style>
+@page { size: A4; margin: 15mm 16mm; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; font-size: 9pt; line-height: 1.4; color: #25352d; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+header { border-top: 6px solid #2b523e; padding-top: 17px; display: flex; justify-content: space-between; align-items: flex-start; }
+.kicker { font-size: 8pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1.7px; color: #587360; margin: 0 0 7px; }
+h1 { font-size: 24pt; letter-spacing: -.8px; line-height: 1.1; margin: 0 0 6px; }
+.subtitle { margin: 0; color: #66746b; font-size: 9pt; }
+.id { text-align: right; font-size: 8pt; color: #69766e; padding-top: 2px; min-width: 80px; }
+.id strong { display: block; font-size: 11pt; color: #2b523e; margin-bottom: 5px; }
+.summary { display: grid; grid-template-columns: 1fr 1.2fr 1fr; margin-top: 21px; background: #f1f5f0; border: 1px solid #dce5db; border-radius: 7px; }
+.summary div { padding: 12px 13px; }
+.summary div + div { border-left: 1px solid #dce5db; }
+.label { display: block; font-size: 7pt; text-transform: uppercase; letter-spacing: .7px; color: #65776a; margin-bottom: 4px; }
+.summary b { font-size: 9pt; }
+.status { margin: 15px 0 19px; padding: 11px 13px; border-left: 3px solid #2b6341; background: #edf5ed; color: #315640; }
+.status strong { display: block; font-size: 9pt; margin-bottom: 3px; }
+.status p { margin: 0; font-size: 8.5pt; }
+h2 { font-size: 10pt; margin: 17px 0 8px; padding-bottom: 5px; border-bottom: 1px solid #dce5db; display: flex; gap: 8px; }
+h2 span { color: #6a836f; font-size: 8pt; padding-top: 2px; }
+p { margin: 6px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 8.4pt; }
+th { text-align: left; background: #f1f5f0; font-size: 7.5pt; color: #536d5b; }
+td, th { border-bottom: 1px solid #e2e8df; padding: 6px 8px; vertical-align: top; }
+.params td:first-child { width: 26%; font-weight: bold; color: #3d5947; }
+.tests td:first-child { width: 62%; }
+.ok { color: #2a6040; font-weight: bold; }
+.pending { color: #856023; font-weight: bold; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.two h2 { margin-top: 16px; }
+.two p { font-size: 8.4pt; }
+code { font-family: Consolas, monospace; font-size: 7.5pt; background: #f2f4f0; padding: 1px 3px; }
+.sign { display: grid; grid-template-columns: 1.4fr 1fr; gap: 25px; margin-top: 17px; font-size: 7.5pt; color: #65746a; }
+.sign div { border-top: 1px solid #a6b3a9; padding-top: 5px; }
+footer { margin-top: 12px; display: flex; justify-content: space-between; gap: 15px; color: #7b877e; font-size: 6.8pt; border-top: 1px solid #e2e8df; padding-top: 7px; }
+body { font-size: 8.5pt; line-height: 1.34; }
+header { padding-top: 13px; }
+.summary { margin-top: 16px; }
+.summary div { padding: 10px 12px; }
+.status { margin: 12px 0 14px; padding: 9px 12px; }
+h2 { margin-top: 13px; margin-bottom: 6px; }
+td, th { padding: 5px 8px; font-size: 8pt; }
+.two h2 { margin-top: 13px; }
+</style>
+</head>
+<body>
+<header><div><p class="kicker">EstuLanches / Controle de mudanças</p><h1>Ficha simplificada de RDM</h1><p class="subtitle">Registro de mudança - Cardápio e pedidos da cantina escolar</p></div><div class="id"><strong>RDM-001</strong>Registro inicial<br>15/11/2026</div></header>
+<div class="summary">
+  <div><span class="label">Versão implantada</span><b>1.0.0</b><br>Implantação inicial</div>
+  <div><span class="label">Inicialização do banco Docker</span><b>15/11/2026 às 20h38</b><br>Horário de Brasília (UTC-3)</div>
+  <div><span class="label">Ambiente de implantação</span><b>Docker Compose local</b><br>Aplicação + PostgreSQL</div>
+</div>
+<div class="status"><strong>Status final: implantação Docker realizada</strong><p>Execução normal informada pelo solicitante e inicialização confirmada nos logs da aplicação e do banco. Na consulta para esta ficha, os serviços estavam parados; disponibilidade contínua não foi atestada.</p></div>
+<h2><span>01</span> Objetivo e escopo da mudança</h2>
+<p>Disponibilizar o EstuLanches com cadastro e consulta de produtos, montagem e confirmação de pedidos e histórico. Entrega de API Express, interface responsiva em português, banco PostgreSQL, testes automatizados, Dockerfile, Compose e documentação técnica.</p>
+<h2><span>02</span> Componentes e parâmetros implantados/configurados</h2>
+<table class="params">
+<tr><td>Aplicação</td><td>Imagem baseada em <code>node:24-alpine</code>, <code>NODE_ENV=production</code>, HTTP na porta 3000; interface e API servidas pelo Express.</td></tr>
+<tr><td>Banco e esquema</td><td>PostgreSQL 17 no Docker; tabelas de produtos, pedidos e itens com PKs, FKs e restrições. Migrações e seis produtos de exemplo com execução única.</td></tr>
+<tr><td>Rede e persistência</td><td>Somente porta da aplicação publicada. Banco acessível pela rede interna; volume <code>postgres_data</code>; healthchecks e aplicação dependente do banco pronto.</td></tr>
+<tr><td>Integridade e segurança</td><td>Valores em centavos; total calculado no servidor; pedido e itens em uma transação; snapshot de preço/nome; SQL parametrizado e credenciais em ambiente.</td></tr>
+</table>
+<h2><span>03</span> Resultado dos testes e verificações</h2>
+<table class="tests">
+<thead><tr><th>Verificação</th><th>Resultado registrado</th></tr></thead>
+<tbody>
+<tr><td>Cálculo do total, limites e validações</td><td class="ok">33 testes unitários aprovados</td></tr>
+<tr><td>API com PostgreSQL real, snapshot e rollback completo</td><td class="ok">6 testes de integração aprovados</td></tr>
+<tr><td>Cadastro, carrinho, histórico, falhas e responsividade</td><td class="ok">1 teste de navegador aprovado</td></tr>
+<tr><td>Instalação limpa e repetição das suítes no ambiente local</td><td class="ok">40 testes aprovados novamente</td></tr>
+<tr><td>Reinício de app e PostgreSQL nativos (fora do Docker)</td><td class="ok">Pedido #1 preservado: R$ 14,70</td></tr>
+<tr><td>Inicialização Docker: logs da aplicação e PostgreSQL</td><td class="ok">Aplicação iniciada; banco pronto</td></tr>
+<tr><td>Persistência após reiniciar os containers sem apagar o volume</td><td class="pending">Não verificada nesta revisão</td></tr>
+</tbody>
+</table>
+<div class="two">
+<div><h2><span>04</span> Observações e acompanhamento</h2><p>Os testes automatizados registrados foram executados fora do Docker. Conferir a disponibilidade com <code>docker compose ps</code> após subir os serviços e verificar um pedido após reinício com o volume preservado.</p></div>
+<div><h2><span>05</span> Plano de reversão</h2><p>Interromper os serviços com <code>docker compose down</code>, preservando o volume. Não usar <code>down -v</code>. Por ser a implantação inicial, não há versão anterior; futuras alterações exigem backup prévio.</p></div>
+</div>
+<div class="sign"><div>Responsável técnico / assinatura: a preencher</div><div>Aprovação formal / data: a preencher</div></div>
+<footer><span>Fontes: registro de validação local, configurações, logs Docker e relato do solicitante.</span><span>EstuLanches 1.0.0 | Página 1 de 1</span></footer>
+</body>
+</html>

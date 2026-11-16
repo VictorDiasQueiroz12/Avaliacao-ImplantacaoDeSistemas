@@ -2,6 +2,8 @@
 
 Data: 15/11/2026 (America/Sao_Paulo). Versão: 1.0.0.
 
+> Atualização posterior, em 15/11/2026: Docker instalado e executado pelo solicitante. A revisão para a ficha RDM confirmou containers e logs de inicialização da aplicação e do PostgreSQL 17.12. O banco ficou pronto às 20h38 e a aplicação iniciou às 20h38min05s (Brasília); ambos foram encerrados às 20h39 com código 0. A porta 3000 estava configurada para publicação e o banco não tinha portas publicadas. Os containers estavam parados na revisão. Não foi repetido o fluxo HTTP nem verificada persistência após reinício dos containers nesta revisão. As observações de Docker ausente abaixo descrevem o ambiente da primeira validação.
+
 ## Ambiente observado
 
 - Projeto inicialmente vazio; sem base anterior para reaproveitar.
