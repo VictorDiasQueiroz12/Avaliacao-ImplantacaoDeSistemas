@@ -49,40 +49,40 @@ td, th { padding: 5px 8px; font-size: 8pt; }
 </style>
 </head>
 <body>
-<header><div><p class="kicker">EstuLanches / Controle de mudanças</p><h1>Ficha simplificada de RDM</h1><p class="subtitle">Registro de mudança - Cardápio e pedidos da cantina escolar</p></div><div class="id"><strong>RDM-001</strong>Registro inicial<br>15/11/2026</div></header>
+<header><div><p class="kicker">EstuLanches / Controle de mudanças</p><h1>Ficha simplificada de RDM</h1><p class="subtitle">Registro de mudança - Cardápio e pedidos da cantina escolar</p></div><div class="id"><strong>RDM-001</strong>Revisão 02<br>15/11/2026</div></header>
 <div class="summary">
   <div><span class="label">Versão implantada</span><b>1.0.0</b><br>Implantação inicial</div>
-  <div><span class="label">Inicialização do banco Docker</span><b>15/11/2026 às 20h38</b><br>Horário de Brasília (UTC-3)</div>
+  <div><span class="label">Última verificação</span><b>15/11/2026 às 21h21</b><br>Horário de Brasília (UTC-3)</div>
   <div><span class="label">Ambiente de implantação</span><b>Docker Compose local</b><br>Aplicação + PostgreSQL</div>
 </div>
-<div class="status"><strong>Status final: implantação Docker realizada</strong><p>Execução normal informada pelo solicitante e inicialização confirmada nos logs da aplicação e do banco. Na consulta para esta ficha, os serviços estavam parados; disponibilidade contínua não foi atestada.</p></div>
+<div class="status"><strong>Status final: sistema em funcionamento no Docker</strong><p>Concluí a implantação e confirmei a aplicação e o banco com status healthy. Acessei o sistema em http://localhost:3000 e verifiquei a resposta da API de saúde, do cardápio e do histórico.</p></div>
 <h2><span>01</span> Objetivo e escopo da mudança</h2>
-<p>Disponibilizar o EstuLanches com cadastro e consulta de produtos, montagem e confirmação de pedidos e histórico. Entrega de API Express, interface responsiva em português, banco PostgreSQL, testes automatizados, Dockerfile, Compose e documentação técnica.</p>
+<p>Implementei o EstuLanches para gerenciar o cardápio e os pedidos da cantina escolar. Disponibilizei cadastro de produtos, carrinho e histórico, com API Express, interface responsiva em português, PostgreSQL, testes automatizados e documentação técnica.</p>
 <h2><span>02</span> Componentes e parâmetros implantados/configurados</h2>
 <table class="params">
-<tr><td>Aplicação</td><td>Imagem baseada em <code>node:24-alpine</code>, <code>NODE_ENV=production</code>, HTTP na porta 3000; interface e API servidas pelo Express.</td></tr>
-<tr><td>Banco e esquema</td><td>PostgreSQL 17 no Docker; tabelas de produtos, pedidos e itens com PKs, FKs e restrições. Migrações e seis produtos de exemplo com execução única.</td></tr>
-<tr><td>Rede e persistência</td><td>Somente porta da aplicação publicada. Banco acessível pela rede interna; volume <code>postgres_data</code>; healthchecks e aplicação dependente do banco pronto.</td></tr>
-<tr><td>Integridade e segurança</td><td>Valores em centavos; total calculado no servidor; pedido e itens em uma transação; snapshot de preço/nome; SQL parametrizado e credenciais em ambiente.</td></tr>
+<tr><td>Aplicação</td><td>Configurei <code>node:24-alpine</code>, <code>NODE_ENV=production</code> e HTTP na porta 3000. Servi a interface e a API pelo Express na mesma porta.</td></tr>
+<tr><td>Banco e esquema</td><td>Configurei PostgreSQL 17 no Docker e criei produtos, pedidos e itens com PKs, FKs e restrições. Automatizei as migrações e a carga única de seis produtos fictícios.</td></tr>
+<tr><td>Rede e persistência</td><td>Publiquei somente a porta 3000 da aplicação. Mantive o banco na rede interna, configurei o volume <code>postgres_data</code> e os healthchecks.</td></tr>
+<tr><td>Integridade e segurança</td><td>Usei centavos e calculei o total no servidor. Salvei pedido e itens em uma transação, preservei preço/nome históricos e utilizei SQL parametrizado e variáveis de ambiente.</td></tr>
 </table>
 <h2><span>03</span> Resultado dos testes e verificações</h2>
 <table class="tests">
 <thead><tr><th>Verificação</th><th>Resultado registrado</th></tr></thead>
 <tbody>
-<tr><td>Cálculo do total, limites e validações</td><td class="ok">33 testes unitários aprovados</td></tr>
-<tr><td>API com PostgreSQL real, snapshot e rollback completo</td><td class="ok">6 testes de integração aprovados</td></tr>
-<tr><td>Cadastro, carrinho, histórico, falhas e responsividade</td><td class="ok">1 teste de navegador aprovado</td></tr>
-<tr><td>Instalação limpa e repetição das suítes no ambiente local</td><td class="ok">40 testes aprovados novamente</td></tr>
-<tr><td>Reinício de app e PostgreSQL nativos (fora do Docker)</td><td class="ok">Pedido #1 preservado: R$ 14,70</td></tr>
-<tr><td>Inicialização Docker: logs da aplicação e PostgreSQL</td><td class="ok">Aplicação iniciada; banco pronto</td></tr>
-<tr><td>Persistência após reiniciar os containers sem apagar o volume</td><td class="pending">Não verificada nesta revisão</td></tr>
+<tr><td>Validei cálculo do total, limites e dados de entrada</td><td class="ok">33 testes unitários aprovados</td></tr>
+<tr><td>Testei a API, o preço histórico e o rollback com PostgreSQL real</td><td class="ok">6 testes de integração aprovados</td></tr>
+<tr><td>Testei cadastro, carrinho, histórico, falhas e responsividade</td><td class="ok">1 teste de navegador aprovado</td></tr>
+<tr><td>Reinstalei as dependências e repeti as suítes locais</td><td class="ok">40 testes aprovados novamente</td></tr>
+<tr><td>Reiniciei app e PostgreSQL nativos, fora do Docker</td><td class="ok">Pedido #1 preservado: R$ 14,70</td></tr>
+<tr><td>Conferi os containers e consultei saúde, cardápio e histórico</td><td class="ok">App e banco healthy; API respondendo</td></tr>
+<tr><td>Consultei os dados disponíveis na aplicação em execução</td><td class="ok">6 produtos e 3 pedidos disponíveis</td></tr>
 </tbody>
 </table>
 <div class="two">
-<div><h2><span>04</span> Observações e acompanhamento</h2><p>Os testes automatizados registrados foram executados fora do Docker. Conferir a disponibilidade com <code>docker compose ps</code> após subir os serviços e verificar um pedido após reinício com o volume preservado.</p></div>
-<div><h2><span>05</span> Plano de reversão</h2><p>Interromper os serviços com <code>docker compose down</code>, preservando o volume. Não usar <code>down -v</code>. Por ser a implantação inicial, não há versão anterior; futuras alterações exigem backup prévio.</p></div>
+<div><h2><span>04</span> Ocorrência e acompanhamento</h2><p>Resolvi a falha de autenticação e confirmei a configuração do banco alinhada ao ambiente. Executei os testes automatizados fora do Docker; ainda preciso verificar a persistência após reiniciar os containers.</p></div>
+<div><h2><span>05</span> Plano de reversão</h2><p>Se precisar interromper a implantação, executarei <code>docker compose down</code>, sem <code>-v</code>, para preservar o volume. Como esta é a versão inicial, farei backup antes de futuras alterações no esquema.</p></div>
 </div>
 <div class="sign"><div>Responsável técnico / assinatura: a preencher</div><div>Aprovação formal / data: a preencher</div></div>
-<footer><span>Fontes: registro de validação local, configurações, logs Docker e relato do solicitante.</span><span>EstuLanches 1.0.0 | Página 1 de 1</span></footer>
+<footer><span>Registrei os resultados dos testes locais e da verificação do sistema em execução no Docker.</span><span>EstuLanches 1.0.0 | Página 1 de 1</span></footer>
 </body>
 </html>
